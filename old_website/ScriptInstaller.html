@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html><head>
+<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+<META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-15201951-1']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+</head>
+<body>
+<h1>Fiendish's Automated Script Installer...uhh...Script<BR></h1>
+Tested to work in zMUD 7.21 on Windows XP. Not guaranteed to work in other versions or system configurations.<BR>
+<BR>
+What this script does:
+<ul><li>Provides an alias that when given the right parameters automatically downloads and installs a script file.</li></ul>
+What this script does not do:
+<ul>
+<li>Fail silently. If someone can figure out how to make VBScript fail without throwing up a message, let me know, eh?</li></ul><BR>
+Download the script here: <a href="ScriptInstaller.zip">ScriptInstaller.zip</a><BR><BR>
+<BR>
+------------ BEGIN INSTRUCTIONS ------------<BR>
+If you have an old version already installed, then you can probably just use that one to install the new version. Isn't that neat?<BR><BR>
+This script installs a class named "ScriptInstaller" containing an alias called "scriptinstall".<BR>
+If any of your scripts conflict with these names, they must be removed first or things could break.<BR><BR>
+
+There is no special procedure necessary for this install. Either import the text file, execute it, or copy/paste the contents.<BR><BR>
+------------ HOW TO USE THIS SCRIPT ---------<BR><BR>
+scriptinstall "&lt;complete url&gt;" "&lt;name of script&gt;"
+<BR>
+example...<BR>
+scriptinstall "http://www.fakeurl.com/directory/MySuperAmazingScript.txt" "My Super Amazing Script"<BR>
+<BR>
+If your URL contains a ~ (like http://www.fakeurl.com/~userdirectory/), you must use two of them (like http://www.fakeurl.com/~~userdirectory/)<BR>
+because otherwise zMUD will strip it out.<BR>
+<BR><BR>
+------------- THIS IS IMPORTANT -------------<BR>
+Make sure you use the real file URL. No redirects. No virtual domains. No framesets.<BR>
+And test everything to make sure it works.<BR><BR>
+- Fiendish
+</body></html>

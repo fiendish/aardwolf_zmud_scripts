@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html><head>
+<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+<META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-15201951-1']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+</head>
+<body>
+<h1>Fiendish's Super Amazing Automap Capture Script For zMUD<BR></h1>
+Tested to work in zMUD 7.21 on Windows XP. Not guaranteed to work in other versions or system configurations.<BR>
+<BR>New in the July 1, 2008 update:<BR>
+<ul><li>The script no longer captures a fixed number of lines. Instead it puts a trigger in the settings for the map window. This is uglier, but more flexible. It should now work with the new mapnames and mapexits tag options.</li></ul>
+
+What this script does:
+<ul><li>Captures the automap to a floating window so that it always stays in the same place on the screen instead of jumping around.<BR>See the picture at the bottom if you don't understand.</li></ul>
+Download the script here: <a href="AutoMap.zip">Automap Capture Script</a><BR>
+IF YOU DO NOT INSTALL THIS SCRIPT AS DESCRIBED BELOW YOU WILL BE SORRY.<BR><BR>
+------------ BEGIN INSTRUCTIONS ------------<BR><BR>
+This script installs a class named "AutoMap" after deleting existing classes of the same name.<BR>
+If any of your scripts conflict with this class name, they must be removed first or they'll be removed for you.<BR><BR>
+Before installing the script, you need to do the following steps...<BR>
+Step one: Make sure that shortmap is NOT enabled by using the shortmap command. You need to see "You will now see blank lines on the map."<BR>
+Optional steps: If you do/don't want to see the map update as you walk, you can toggle that feature using the "automap" command. You can also toggle seeing it during runs with the "maprun" command.<BR><BR>
+To install the script go to the Actions menu in zMUD and choose "Execute script..."<BR>
+<img src="how_to_execute_file1.png" alt="How to execute files step 1"><BR>
+<BR>
+Then select the text file containing the script, in this case AutoMap.txt, and click Open<BR>
+<img src="how_to_execute_file2.png" alt="How to execute files step 2"><BR>
+<BR>
+The script then installs and pops up your new floating map window.<BR>
+zMUD will ask you to save a file called MAP.mud. Just click SAVE.<BR>
+The map should now look something like this...<BR>
+(Note: I've done some fancypants character substitution with a custom font, so yours won't look exactly like this)<BR>
+<img src="mapwindow.gif"><BR>
+<BR>
+Now you need to resize the map window to your liking and then go to the Layout menu and lock and save your layout.<BR>
+Note: There is currently a bug (in zMUD as far as I know) that will make the map window load with a scroll bar when you next launch zMUD.<BR>
+There is nothing that you can do about this that will be permanent so just resize the map window next time to accomodate the scroll bar intrusion.<BR><BR>
+With thanks to Atreidess for suggestions.<BR>
+If you have questions, feel free to send tells.<BR><BR>
+- Fiendish
+</body>
+</html>

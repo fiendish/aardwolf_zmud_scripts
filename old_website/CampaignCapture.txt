@@ -1,0 +1,19 @@
+#CLASS {CampaignStuff} {setdef}
+#TRIGGER "cpgoodluckline" {^Commander Barcett tells you 'I have selected (%d) targets for you to hunt, %w.'$} {#CLASS ./CampaignStuff/CampaignCapture 1;#MAKEWINDOW campaign open "floating=yes|persistant|title='Campaign Status'|width=80c|height="%eval( %1+3)"c";recapturecampaignlist;#T- cpgoodluckline} "" {notrig}
+#CLASS 0
+#CLASS {CampaignStuff|CampaignCapture} {setdef}
+#ALIAS recapturecampaignlist {#CLR campaign;#T+ cpline;#T+ cpleftline;#VARIABLE cp_moblist "";cp_mobsleft = 0;#SEND {cp check};#GAGON}
+#ALIAS cp_internal_shutdown {#CLOSE campaign;#T+ cpgoodluckline;#CLASS ./CampaignStuff/CampaignCapture 0}
+#VAR cp_mobsleft {}
+#VAR cp_moblist {}
+#TRIGGER {^Welcome to Aardwolf. May your adventures be mystical, challenging and rewarding.$} {recapturecampaignlist} "" {Verbatim|notrig}
+#TRIGGER "cpleftline" {^You have * left to finish this campaign.$} {#WINDOW campaign %lf;#CAPTURE campaign;#GAGOFF;#T- cpline;#T- cpleftline} "" {notrig|disable}
+#TRIGGER {^Congratulations, that was one of your CAMPAIGN mobs!$} {#IF {@cp_mobsleft > 1} {recapturecampaignlist}} "" {verbatim|notrig}
+#TRIGGER {^CONGRATULATIONS! You have completed your campaign.$} {cp_internal_shutdown} "" {verbatim|notrig}
+#TRIGGER "cpline" {^You still have to kill ~* (*) ~((*)~)*$} {#CAPTURE campaign;#ADD cp_mobsleft 1;#VARIABLE cp_moblist %additem( %lower( %1), @cp_moblist)} "" {notrig|disable}
+#TRIGGER {^Campaign cleared.} {cp_internal_shutdown} "" {verbatim|notrig}
+#TRIGGER "cpscanline" {^     - {~(Wounded~)|~(Wounded~) |}{~(H~)|~(Hidden~) |}{~(I~)|~(Invis~) |}{~(T~)|~(Translucent~) |}{~(X~)|~(Marked~) |}{~(R~)|~(Red Aura~) |~(G~)|~(Golden Aura~) |}{~(W~)|~(White Aura~)|}{ |}(*)$} {#IF (%ismember( %lower( %1), @cp_moblist)) {#PSUB {%ansi(red, bold)~[%ansi( white, bold)%1%ansi( red, bold)~]} %x1}} "" {notrig}
+#TRIGGER {^You are not currently on a campaign.$} {cp_internal_shutdown} "" {verbatim|notrig}
+#TRIGGER {^You have run out of time to complete your current campaign.$} {cp_internal_shutdown} "" {verbatim|notrig}
+#CLASS 0
+#CLASS {CampaignStuff|CampaignCapture} 0

@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html><head>
+<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+<META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-15201951-1']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+</head>
+<body>
+<h1>Fiendish's HP/Mana/Moves/Enemy Status Gauges for zMUD<BR></h1>
+Tested to work in zMUD 7.21 on Windows XP. Not guaranteed to work in other versions or system configurations.<BR>
+What this script does:
+<ul><li>Produces gauges like shown below to display your current HP, Mana, Moves, and Enemy HP Percentage (if in combat) as colored bars</li></ul>
+
+New in the August 29, 2008 update:<BR>
+<ul><li>The stat_enemyname variable now only contains the enemy name instead of also including a colon. This makes the variable more generic but should not otherwise change the functionality of the script.</li></ul>
+
+New in the August 22, 2008 update:<BR>
+<ul><li>The enemy HP gauge would previously lose the enemy name if you got bashed (or otherwise rested) during combat. This was because I had stupidly made a change from the original script thinking that the change wouldn't have any affect on the gauges. This was clearly wrong. Thanks to Bremen for catching this.</li></ul>
+
+New in the August 14, 2008 update:<BR>
+<ul><li>I think the bug where some people were seeing empty/grey gauges has finally been fixed. Thanks to Mahony for this one.</li></ul>
+
+New in the August 06, 2008 update:<BR>
+<ul><li>Just a minor precautionary change. The statmon capture is a little bit more specific just to prevent possible future issues that are very extremely unlikely to ever happen. So unlikely, in fact, that you're more likely to win the state lottery twice in a row, because the problem scenario would require more than a dozen new fields added to statmon in a very specific format. But, you know, just in case, right?. Thanks to Abelinc for the suggestion.</li></ul>
+
+New in the August 05, 2008 update:<BR>
+<ul><li>The statmon capture should now accept mob names with punctuation in them. Reported by Sleipner.</li>
+<li>Variable names were changed to be a bit more unique to the script, just in case.</li></ul>
+
+Download the script here: <a href="StatGauges.zip">StatGauges.zip</a><BR>
+IF YOU DO NOT INSTALL THIS SCRIPT AS DESCRIBED BELOW YOU WILL BE SORRY.<BR><BR>
+------------ BEGIN INSTRUCTIONS ------------<BR><BR>
+This script installs a class named "StatGauges" after deleting existing classes of the same name.<BR>
+If any of your scripts conflict with this class name, they must be removed first or they'll be removed for you.<BR><BR>
+
+To install the script go to the Settings menu in zMUD, then go to "Import" and choose "Script (ASCII)..."<BR>
+<img src="how_to_import_ascii.png" alt="How to import ascii scripts"><BR><BR>
+Then select the text file containing the script, in this case StatGauges.txt, and click Open<BR>
+<img src="how_to_execute_file2.png" alt="How to select the file to import"><BR>
+<BR>
+The script then installs your new gauges and enables statmon.<BR>
+The gauges should look something like this...<BR>
+<img src="StatGauges.png" alt="what my gauges look like"><BR>
+(Note: I've moved mine to the bottom. There's no way to do this in the script, sorry, so you'll have to move them manually as shown below.)<BR>
+<img src="RepositionGauges.png" alt="how to move the gauges to the bottom">
+<BR><BR>
+If you have questions, feel free to send tells.<BR><BR>
+- Fiendish
+</body> </html>

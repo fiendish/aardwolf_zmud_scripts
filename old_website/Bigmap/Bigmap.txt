@@ -1,0 +1,61 @@
+#SENDPROMPT %char( 255)%char( 250)%char( 102)%char( 2)%char( 1)%char( 255)%char( 240)
+#DELCLASS SelfUpdatingBigmap
+#WAIT 1000
+#IF (%ismember("CONTINENTS",%names) = 0) {#MAKEWINDOW CONTINENTS open "floating=yes|scrolling=no|force|width=63c|height=60c|persistant"}
+#CLASS {SelfUpdatingBigmap} {setdef}
+#ALIAS updatecontinent {#VARIABLE previouscontinentnumber "";#CLASS continentupdateinternals 1;#STATE bigmapdelimiter 0;#T- bigmapcoords;#SEND {bigmap noself};#GAG}
+#ALIAS bigmaphelp {#SAY %ansi( gray)"";#SAY %ansi( gray)"+-------------------------------------------------------------------+";#SAY %ansi( gray)"|               Aardwolf Self-Updating Bigmap Walker                |";#SAY %ansi( gray)"|                        Author: Fiendish                           |";#SAY %ansi( gray)"+-------------------------------------------------------------------+";#SAY %ansi( gray)"|                                                                   |";#SAY %ansi( gray)"|    Local maps are stored as text files in your mud directory.     |";#SAY %ansi( gray)"|                                                                   |";#SAY %ansi( gray)"+-------------------------------------------------------------------+";#SAY %ansi( gray)"| List of Commands                                                  |";#SAY %ansi( gray)"+---------------------+---------------------------------------------+";#SAY %ansi( gray)"| updatecontinent     | Updates the map of the current continent.   |";#SAY %ansi( gray)"+---------------------+---------------------------------------------+";#SAY %ansi( gray)"| bigmaphelp          | Displays this help screen.                  |";#SAY %ansi( gray)"+---------------------+---------------------------------------------+";#SAY %ansi( gray)""}
+#ALIAS drawmap {#IF (%numparam( ) = 3) {#VARIABLE continentnumber %1;#VARIABLE mudxcoord %2;#VARIABLE lastmudycoord @mudycoord;#VARIABLE mudycoord %3;#IF (@continentnumber = @previouscontinentnumber) {#VARIABLE previouscontinentline {%arrget( currentmap, %eval( @lastmudycoord+2))};#WINDOW CONTINENTS {%e[%eval( @lastmudycoord+2)~;0H@previouscontinentline}} {#VARIABLE previouscontinentnumber @continentnumber;#CLR CONTINENTS;#VARIABLE currentmap %array( );#PRIORITY {#FILE 3 %concat( %replace( %right( {%session.zMUDFileName("","")}, 2), "\", "/"), %replace( %replace( %db( @continentmapnumbers, @previouscontinentnumber), ",", ""), " ", "_"), "_MAP.txt");#GAG;#IF (%filesize( 3) = 0) {#CLOSE 3;#GAG;updatecontinent;#ABORT 1};#LOOP %filesize( 3) {#WINDOW CONTINENTS %arrset( currentmap, %i, %read( 3))};#CLOSE 3;#GAG;#VARIABLE coordinatepadding %eval( (%len( %stripansi( %arrget( currentmap, 1)))-16)/2)}};#WINDOW CONTINENTS {%e[%eval( @mudycoord+2)~;%eval( @mudxcoord+2)H%e[1~;31m~*%e[%eval( %db( @continentmapheights, @previouscontinentnumber)+2)~;@coordinatepadding~H%e[1~;36m" Location: "%format( "&2.0f", @mudxcoord)", "%format( "&2.0f", @mudycoord)" "}}}
+#ALIAS atconnect {#SENDPROMPT %char( 255)%char( 250)%char( 102)%char( 2)%char( 1)%char( 255)%char( 240)}
+#VAR continentmapheights {555040240450340115630}
+#VAR continentmapnumbers {0The Continent of Mesolar1The Southern Ocean2Gelidus3The Dark Continent, Abend4Alagh, the Blood Lands5The Uncharted Oceans6Vidblain, the Ever Dark}
+#VAR currentmap {}
+#VAR coordinatepadding {}
+#VAR continentnumber {}
+#VAR mudxcoord {}
+#VAR mudycoord {}
+#VAR lastmudycoord {}
+#VAR previouscontinentnumber {-1} {-1}
+#VAR previouscontinentline {}
+#REGEX "bigmapcoords" {^{coords}(-?\d+),(-?\d+),(-?\d+)} {#GAG;#IF (%1 != -1) {drawmap %1 %2 %3}}
+#REGEX {^{coords}-1$} {#PRIORITY {#GAG;#IF (@previouscontinentnumber != -1) {#VARIABLE previouscontinentnumber -1;#CLR CONTINENTS;#LOOP 5 {#WINDOW CONTINENTS %cr};#WINDOW CONTINENTS "     "%ansi( red, bold)Continent view not currently enabled here.}}} "" {case|verbatim}
+#REGEX {^{bigmap}(\d),(.*)$} {#GAG}
+#REGEX {^{/bigmap}$} {#GAG} "" {case|verbatim}
+#TRIGGER {^Continent view is not available for this area.$} {#GAG;#CLASS continentupdateinternals 0;#T+ bigmapcoords} "" {case|verbatim}
+#TRIGGER {^Received Telopts to turn ON bigmap+coords.$} {#GAG} "" {case|verbatim|notrig}
+#CLASS 0
+#CLASS {SelfUpdatingBigmap|continentupdateinternals} {disable|setdef}
+#VAR continentmaptitlepart {}
+#VAR continent {}
+#VAR filename {}
+#TRIGGER "bigmapdelimiter" {^(+{------------------------------------------------------------|------------------------------}+)$} {#PRIORITY {#CLR CONTINENTS;#VARIABLE continentmaptitlepart %concat( "+", %repeat( "-", %eval( (%len( %1)-%len( @continent)-3)/2)), " ", @continent, " ");#WINDOW CONTINENTS %write( 1, %e[37m%concat( @continentmaptitlepart, %repeat( "-", %eval( %len( %1)-%len( @continentmaptitlepart)-1)), "+"))}} "" {notrig}
+#COND {^(+{------------------------------------------------------------|------------------------------}+)$} {#PRIORITY {#WINDOW CONTINENTS %write( 1, %e[37m%1);#CLOSE 1}} {notrig}
+#REGEX {(\|.*\|)} {#PRIORITY {#WINDOW CONTINENTS %write( 1, %e[37m%param1)}} "" {notrig|color}
+#REGEX {^{bigmap}(\d),(.*)$} {#PRIORITY {#GAGON;#ADDKEY continentmapnumbers %1 {%2};#VARIABLE continent "%2";#VARIABLE filename %replace( %right( {%session.zMUDFileName(%replace( %replace( @continent, " ", "_"), ",", ""),"")}, 2), "\", "/");#PRIORITY {#FILE 1 %concat( @filename, "_MAP.txt");#ERASE 1;#FILE 1 %concat( @filename, "_MAP.txt")}}} "" {notrig}
+#REGEX {^{/bigmap}$} {#PRIORITY {#GAGOFF;#T+ bigmapcoords;#SHOW %ansi( cyan, bold)Updated bigmap for ~"@continent~";#VARIABLE previouscontinentnumber @continentnumber;#VARIABLE lastmudycoord 0;drawmap @continentnumber @mudxcoord @mudycoord;#CLASS continentupdateinternals 0}} "" {notrig}
+#REGEX {^{coords}(-?\d+),(-?\d+),(-?\d+)$} {#GAG;#VARIABLE continentnumber %1;#VARIABLE mudxcoord %2;#VARIABLE mudycoord %3} "" {notrig}
+#CLASS 0
+#CLASS {SelfUpdatingBigmap|continentupdateinternals} 0
+#SAY "+-------------------- IMPORTANT INSTALLATION NOTES! --------------------+"
+#SAY "|                                                                       |"
+#SAY "| The default window size should be just large enough for the Uncharted |"
+#SAY "| Ocean to display using the font Courier 10.                           |"
+#SAY "| If it doesn't fit nicely on your screen, you can make the font size   |"
+#SAY "| smaller inside the CONTINENTS window. The font Lucida Console allows  |"
+#SAY "| you to use any size you want. Just type in the number.                |"
+#SAY "| If you have room on your screen, I recommend docking the CONTINENTS   |"
+#SAY "| window to the right side of the mud output. Only bad things will come |"
+#SAY "| from leaving it floating, since zMUD's ~"on top~" settings are somewhat |"
+#SAY "| broken.                                                               |"
+#SAY "| Don't forget to save your layout when you're done rearranging your    |"
+#SAY "| windows.                                                              |"
+#SAY "|                                                                       |"
+#SAY "| The first time you enter a continent after installing the script,     |"
+#SAY "| there will be a bit of delay while the mud sends you the bigmap.      |"
+#SAY "| Future visits to the continent will have no delay.                    |"
+#SAY "|                                                                       |"
+#SAY "|                                                       - Fiendish      |"
+#SAY "|                                                                       |"
+#SAY "+-----------------------------------------------------------------------+"
+bigmaphelp
+CONTINENTS: #MENU {Settings|Save As}

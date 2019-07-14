@@ -1,0 +1,17 @@
+#DELCLASS ChannelCapture
+#IF (%window(CHANNELS) = 0) {#MAKEW CHANNELS open "width=100c|height=21c|floating=yes|scrolling=yes|persistant"}
+#CLASS {ChannelCapture} {setdef}
+#ALIAS hidechannels {#VARIABLE chancap_hidechannels %eval( not @chancap_hidechannels);#IF (@chancap_hidechannels) {#SAY %ansi( red, bold)"[ NOW HIDING CHANNELS FROM MAIN WINDOW ]"} {#SAY %ansi( green, bold)"[ NOW SHOWING CHANNELS IN MAIN WINDOW ]"}}
+#VAR chancap_hidechannels {0}
+#REGEX {^\{chan ch=(~[^~}~]+)\}} {#SUBSTITUTE {};#CAPTURE CHANNELS;#IF (@chancap_hidechannels = 1) {#GAG}}
+#COND {^$} {#IF (@chancap_hidechannels = 1) {#GAG}} {within|param=1}
+#CLASS 0
+#send {tag channels on}
+CHANNELS: #MENU {Settings|Save As}
+#SAY "                 CHANNEL CAPTURE SETUP INSTRUCTIONS                "
+#SAY "+-----------------------------------------------------------------+"
+#SAY "|                                                                 |"
+#SAY "| If you don't want to see channels in your main window, you can  |"
+#SAY "| type 'hidechannels' to toggle them hidden/showing.              |"
+#SAY "|                                                                 |"
+#SAY "+-----------------------------------------------------------------+"

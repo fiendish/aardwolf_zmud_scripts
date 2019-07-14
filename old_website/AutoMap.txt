@@ -1,0 +1,25 @@
+#DELCLASS AutoMap
+#MAKEW MAP open "width=30c|height=21c|floating=yes|scrolling=no|persistant"
+#CLASS {AutoMap}
+#ALIAS atconnect {#SENDPROMPT %char( 255)%char( 250)%char( 102)%char( 4)%char( 1)%char( 255)%char( 240)}
+#TRIGGER {* opens *.$} {#SEND map} "" {notrig}
+#TRIGGER {* opens.$} {#SEND map} "" {notrig}
+#TRIGGER {^~<MAPEND~>$} {#PRIORITY {#C-;#GAG;:MAP: #GAG;#GAGOFF}} "" {notrig}
+#TRIGGER {^You{ will now see the map automatically when you move|r journey was broken by the need to defend yourself}.$} {map;#GAG} "" {notrig}
+#TRIGGER {^You will no longer see the map automatically when you move.$} {#CLR MAP;#LOOP 4 {#WINDOW MAP %cr};#WINDOW MAP "     "%ansi( red)~[ %ansi( hi, red)Map Unavailale %ansi( red)~]} "" {notrig}
+#TRIGGER {^~<MAPSTART~>$} {#PRIORITY {#GAG;#GAGON;#C+ MAP;#CLR MAP}} "" {notrig}
+#TRIGGER {^You close *.$} {#SEND map} "" {notrig}
+#TRIGGER {^You open *.$} {#SEND map} "" {notrig}
+#CLASS 0
+MAP: #MENU {Settings|Save As}
+#send {tags map on}
+#send {tags mapnames on}
+#send {tags mapexits on}
+#send {map}
+#SAY "                     AUTOMAP INSTALL INSTRUCTIONS                  "
+#SAY "+-----------------------------------------------------------------+"
+#SAY "|                                                                 |"
+#SAY "| If you don't want to see room names or exits in the Automap,    |"
+#SAY "| type 'tags mapnames off' and 'tags mapexits off' respectively.  |"
+#SAY "|                                                                 |"
+#SAY "+-----------------------------------------------------------------+"

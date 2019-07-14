@@ -1,0 +1,18 @@
+#CLASS {CampaignStuff} {setdef}
+#ALIAS cphunt {#class ./CampaignStuff/CPhunt 1;CPhunt/cpmob = %1;CPhunt/cpcounter = %2;#IF (@CPhunt/cpcounter == "") {CPhunt/cpcounter = 1};cphuntbounce;#ALARM cphunttimeout {+@CPhunt/cptimeoutdelay} {#class ./CampaignStuff/CPhunt 0;#echo cphunt automatically reset}}
+#CLASS {CampaignStuff|CPhunt} {setdef}
+#ALIAS cphuntbounce {hun @cpcounter.@cpmob;#ALARM cphunttimeout {+@cptimeoutdelay}}
+#ALIAS cphuntstop {#echo Aborting cphunt;cpcounter = 1;#class ./CampaignStuff/CPhunt 0;#untrigger cphunttimeout;#gag}
+#VAR cpcounter {1}
+#VAR cpmob {}
+#VAR cptimeoutdelay {3}
+#TRIGGER "cphuntline0" {^* is here!$} {#echo Check scan and then move to a new room before trying again.;cpcounter = 1;#class ./CampaignStuff/CPhunt 0;#untrigger cphunttimeout;#gag}
+#TRIGGER "cphuntline1" {^The trail of * is confusing~, but you're reasonably sure %w headed %w.$} {#add cpcounter 1;cphuntbounce}
+#TRIGGER "cphuntline2" {^There are traces of * having been here. Perhaps they lead %w~?$} {#add cpcounter 1;cphuntbounce}
+#TRIGGER "cphuntline3" {^You are almost certain that * is %w from here.$} {#add cpcounter 1;cphuntbounce}
+#TRIGGER "cphuntline4" {^You are confident that * passed through here~, heading %w.$} {#add cpcounter 1;cphuntbounce}
+#TRIGGER "cphuntline5" {^You have no idea what you're doing~, but maybe * left %w~?} {#add cpcounter 1;cphuntbounce}
+#TRIGGER "cphuntline6" {^You seem unable to hunt that target for some reason.$} {#echo This might be the one! (@cpcounter.@cpmob);cpcounter = 1;#class ./CampaignStuff/CPhunt 0;#untrigger cphunttimeout;#gag}
+#TRIGGER "cphuntline7" {^No-one in this area by that name.$} {#echo Mob doesn't exist or may be unhuntable for some reason.;cpcounter = 1;#class ./CampaignStuff/CPhunt 0;#untrigger cphunttimeout;#gag}
+#TRIGGER "cphuntline8" {^You couldn't find a path to * from here.$} {#add cpcounter 1;cphuntbounce}
+#CLASS 0

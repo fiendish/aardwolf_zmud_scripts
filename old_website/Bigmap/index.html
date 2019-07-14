@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html><head>
+<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+<META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>zMUD Bigmap Script</title>
+<style type="text/css">
+body 
+{
+	background-color: #FFFFFF;
+	font: .8em/1.3em verdana,arial,helvetica,sans-serif;
+	text-align: left;
+}
+#media
+{
+   margin-top: 40px;
+}
+#noUpdate
+{
+	margin: 0 auto;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: x-small;
+	color: #cccccc;
+	text-align: left;
+	width: 210px; 
+	height: 200px;	
+	padding: 40px;
+}
+</style>
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-15201951-1']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+</head>
+<body>
+<h1>Fiendish's Super Amazing Bigmap Script</h1>
+<BR>Tested to work in zMUD 7.21 on Windows XP. Not guaranteed to work in other versions or system configurations.<BR>
+<BR>
+Download the script here: <a href="Bigmap.zip">Bigmap.zip</a><BR>
+Have a problem? <a href="faq.html">Read the FAQ!</a><BR>
+What this script does:<BR>
+<ul><li>Just watch the video at the bottom of the page.</li></ul>
+Useful commands:<BR>
+<ul><li>updatecontinent - Updates the stored cache of the map for the current continent. Use whenever new areas are added or old areas are removed.</li>
+<li>bigmaphelp - Shows the info screen with command list.</li></ul>
+<BR>New in the September 12, 2008 update:
+<ul>
+<li>Coordinates recently became available inside areas. This allows the map to stay up when you go into a zone. Have given previouscontinentnumber a default value of -1 to correct a new issue at login.</li>
+</ul>
+<BR>New in the August 10, 2008 update:
+<ul>
+<li>Coordinates recently became available in Vidblain. The script now knows how tall the Vidblain bigmap is so that it can display properly.</li>
+</ul>
+<BR>New in the July 20, 2008 update:
+<ul>
+<li>Just performance enhancements. Speedwalks and changing continents should happen more smoothly now.</li>
+</ul>
+New in the July 13, 2008 update:
+<ul>
+<li>There was apparently an issue related to color codes being shown differently under VT100 and ANSI color settings. This should be fixed.</li>
+</ul>
+<BR>
+IF YOU DO NOT INSTALL THIS SCRIPT AS DESCRIBED BELOW YOU WILL BE SORRY.<BR><BR>
+------------ BEGIN INSTRUCTIONS ------------<BR><BR>
+This script installs a class named "SelfUpdatingBigmap" which contains a disabled class called "continentupdateinternals"<BR>
+and aliases "bigmaphelp", "drawmap", "updatecontinent", and "vidblainmap".<BR>
+It will also create several text files in your zMUD Aardwolf profile directory named after the continents.<BR>
+If any of your scripts conflict with these names, they must be removed first or everything will break.<BR><BR>
+To install the script go to the Actions menu in zMUD and choose "Execute script..."<BR>
+<img src="../how_to_execute_file1.png" alt="How to execute files step 1"><BR>
+<BR>
+Then select the text file containing the script, in this case Bigmap.txt, and click Open<BR>
+<img src="../how_to_execute_file2.png" alt="How to execute files step 2"><BR>
+When the installer is done it will ask you to save a file called CONTINENTS.MUD.<BR>
+Click SAVE.<BR><BR>
+<font color=red>IMPORTANT INFORMATION IF YOU PLAN TO DOCK THE CONTINENTS WINDOW:</font><BR>
+<img src="screenshot.png" alt="If your vertical screen resolution is lower than 900 pixels, you'll need to use a font smaller than Courier 10 for the CONTINENTS window output."><BR>
+<BR>
+<font color=red>IMPORTANT INFORMATION AFTER YOU INSTALL THE SCRIPT:</font><BR>
+After you install the script, now you need to go and visit each continent in order to let the script update the internal cache. The script works using stored copies of the bigmaps. If you don't give it a chance to store copies, then it can't do its magic.<BR>
+To visit a continent from Aylor recall type "runto &lt;continent_keyword&gt;", like so:<BR>
+runto abend<BR>
+runto alagh<BR>
+runto southern<BR>
+runto uncharted<BR>
+runto mesolar<BR>
+runto vidblain<BR>
+runto gelidus<BR>
+<BR>
+Or you could just walk to each continent.<BR>
+When you visit a continent for the first time or when you manually initiate a continent storage update (with the updatecontinent command), you will see a message like:<BR>
+<font color=cyan style="BACKGROUND-COLOR: black">Updated bigmap for "The Continent of Mesolar"</font> or whatever the name of the continent is.<BR>
+<BR>
+That's it. Below is a video showing what the script does.
+<BR>
+<div id="media">
+<video controls width="796"><source src="Bigmap.m4v" type="video/mp4"></video>
+<br>
+Note: Speedwalk times are completely unaffected by activation of this script, though you will see yourself running.<BR><BR><BR></div>
+</body>
+</html>
+

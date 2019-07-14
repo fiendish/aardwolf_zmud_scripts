@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html><head>
+<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+<META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-15201951-1']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+</head>
+<body>
+<h1>How to make multiple channel tabs in zMUD</h1>
+<h3><HR>
+"Hey, Fiendish, your channel capture is great, but I wish I could have multiple windows with the channels split up in them instead of having all channels go into just one window."
+<HR><BR></h3>
+I really wish I could do this part for you. Unfortunately, zMUD doesn't allow me to do create tabs in subwindows from inside a script. The only way that I know of to do this is a manual process. So I'm going to show you how to do it with a series of examples.<BR>
+<BR>
+In order to follow this page, you'll first need to download and install the base channel capture script from here: <a href="index.html">Channel Capture Script</a>.
+
+<BR><BR>
+Before you begin, you need some information first. Just keep the following information in mind for later.<BR><BR>
+First you need to know how to make a tabbed environment...<BR>
+In order to create a tabbed environment, you need to start with at least two windows.<BR>
+<img src="multiple_windows.png"><BR>
+You also need to have your layout unlocked.<BR>
+You can check this (or change it) by going to the Layout menu and unselecting "Lock Layout" if it is selected.<BR>
+<img src="unlock_layout.png"><br>
+Having an unlocked layout allows you to dock windows inside each other.<BR>
+<BR>
+Now you need to know about the different kinds of window docking in zMUD. There are 9 different modes for docking in windows -- tabbed, frame split left, frame split right, frame split top, frame split bottom, window split left, window split right, window split top, and window split bottom.<BR>
+For this exercise, I'm only interested in the first one, tabbed, but below are examples of each so you know what you're looking at when you see them.<BR>
+<img src="tabbed_window_drag.png"><BR>
+<img src="frame_split_window_drag.png"><BR>
+<img src="window_split_window_drag.png"><BR>
+<BR><BR>
+And here is what the results of each dock mode look like:<BR>
+<img src="window_drag_outcomes.png"><BR><BR>
+Now that you have the required docking information, we can move on to making the tabbed channel windows.<BR>
+<BR>
+First, think about what tabs you want for channels. Let's assume for now that you're going to leave the CHANNELS window in place as it is (capturing all channels), and that you just want to add new tabs to that frame that each capture one or more different channels.<BR>
+For the first example I'm going to make a special tab just for my Ftalk channel.<BR>
+In preparation for this I'm going to actually create the tab. Then I'm going to modify the script to use it.<BR>
+To make the tab I type "#MAKEW FRIENDS open floating=yes" to create a new window called FRIENDS. Then I type "FRIENDS: #MENU {Settings|Save As}" to save the new window. Then I use the information above to dock it as a new tab in the same frame that has CHANNELS.
+<BR>
+Next bring up the main output Settings window. You can do this by clicking in the main output frame and then typing Ctrl+G. In the Settings window you want to find the class folder for ChannelCapture.<BR><BR>
+<img src="settings_window.png"><BR><BR>
+Double click on the ChannelCapture class and you'll see the stuff inside it. We're going to be working on the trigger that captures channels, so select it and look at the script contents.<BR><BR>
+<img src="channel_capture_class.png"><BR><BR>
+See the line above that captures all channels to the CHANNELS window. We're going to modify that line to also capture just my ftalk channel to the FRIENDS tab that I made.<BR>
+So add a new line after <code>#CAPTURE CHANNELS</code> and type <code>#IF (%1 = "ftalk") {#CAPTURE FRIENDS}</code><BR>
+This means "If the channel name is ftalk, then capture it to the friends tab too."<BR>
+<img src="capture_ftalk_duplicate.png"><BR><BR>
+Now the CHANNELS tab has all my channels and the FRIENDS tab has just my ftalk.<BR><BR>
+Next I want to add another tab for the Tech channel, so I do what I did before for FRIENDS and make a new tab called TECH.<BR>
+This time the script change is slightly more complicated, because I want to introduce some efficiency and a new concept.<BR>
+Change the line we added last time to instead say <code>#IF (%1 = "ftalk") {#CAPTURE FRIENDS} {#IF (%1 = "tech") {#CAPTURE TECH}}</code><BR>
+This means "If the channel name is ftalk, then capture it to the friends tab. Otherwise (the second set of curly braces associated with the first #IF means 'otherwise' or 'else'), if the channel name is tech, capture it to the tech tab."<BR>
+<img src="capture_ftalk_tech_duplicate.png"><BR><BR>
+Now I could have put <code>#IF (%1 = "tech") {#CAPTURE TECH}</code> on its own line just like I originally did with the ftalk capture, but I did it this way for two reasons.<BR>
+First, it's more efficient for zMUD to only check if the channel is Tech if it is not Ftalk.<BR>
+Second, the "else" syntax enables us to do powerful things in fewer lines. For instance, say that for some reason you want your ftalk channel to ONLY go to the FRIENDS tab and not go to the CHANNELS tab.<BR>
+You can accomplish by moving the <code>#CAPTURE CHANNELS</code> line inside the "else" clause for ftalk, like this...<BR>
+<code>#IF (%1 = "ftalk") {#CAPTURE FRIENDS} {#CAPTURE CHANNELS;#IF (%1 = "tech") {#CAPTURE TECH}}</code><BR>
+This says "If the channel is ftalk, send to FRIENDS. Otherwise, send to CHANNELS and also send to TECH if the channel is tech."<BR>
+Or maybe you want both your ftalk and my tech channels to not go to the CHANNELS tab. Then you might do...<BR>
+<code>#IF (%1 = "ftalk") {#CAPTURE FRIENDS} {#IF (%1 = "tech") {#CAPTURE TECH} {#CAPTURE CHANNELS}}</code><BR>
+This says "If the channel is ftalk, send to FRIENDS. Otherwise, if the channel is tech send to TECH. Otherwise, send to CHANNELS."<BR>
+<img src="capture_ftalk_tech_unique.png">
+<BR>
+<BR>
+Once you're done making new tabs, don't forget to lock your layout and then save it again.
+<BR>
+<BR>
+If you have more questions feel free to send me tells or personal notes.<BR>
+- Fiendish
+</body></html>

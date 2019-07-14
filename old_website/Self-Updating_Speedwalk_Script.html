@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html><head>
+<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+<META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-15201951-1']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+</head>
+<body>
+<h1>Fiendish's Super Amazing Self-Updating Speedwalk Script<BR>For zMUD<BR></h1>
+Inspired by Danj's wjs_speedwalk script.<BR>Tested to work in zMUD 7.21 on Windows XP. Not guaranteed to work in other versions or system configurations.<BR><BR>
+<h2><font color=red>IMPORTANT BEFORE YOU DOWNLOAD!<BR>The major functionality of this script is now built into the MUD as of August 02, 2008. If you have no interest in overriding any of the speedwalks, just use that instead of this script. If you do plan to override speedwalks, then this script is for you.</font></h2><BR>
+
+New in the November 12, 2010 update:<BR>
+<ul><li>Areas have been changing names (Thanks for the heads up, Accora). The Realm of Evil Heroes no longer exists, and so isn't a good string to check for when finding the end of the 
+areas list. This check has been replaced with one for A Clearing in the Woods.</li>
+<li>Edit: Now replaced with The Realm of Infamy. Thanks to Tlamacazqui for pointing out my mistake.</li></ul>
+
+New in the August 03, 2008 update:<BR>
+<ul><li>Should now accomodate the new mudside runto command. If you try to run to one of the 'find' locations in Aylor, it passes the keyword for your selection to the mud.</li>
+<li>The script should also work now for people with colors turned off. Why anyone would play without color is beyond me, but it should work anyway.</li></ul>
+
+New in the July 03, 2008 update:<BR>
+<ul><li>Fixed a minor bug in the updater that was preventing it from capturing Wobbly Woes of Woobleville. Thanks Oldham.</li></ul>
+
+New in the June 29, 2008 update:<BR>
+<ul><li>Changed the updater to use the speedwalk command instead of the now-defunct contsw helpfile.</li></ul>
+
+New in the March 23, 2008 update:<BR>
+<ul><li>You can now use zMUD aliases in your override speedwalks. This is a very small change that uses #EXEC instead of #SEND. Thanks to Neryx.</li></ul>
+
+New in the March 17, 2008 update:<BR>
+<ul><li>With any luck the obscure zMUD forgetting where to put files bug should be fixed. A result of this change is that now files are put into your Aardwolf profile <BR>subfolder instead of the main zMUD directory. Thanks to Danj.</li></ul>
+
+New in the March 15, 2008 update:<BR>
+<ul><li>Fixed handling of speedwalks with multiple colons in the name.</li>
+<li>Seems to fix some strangeness where Deadlights wasn't being captured from the help file.</li>
+<li>There is a new speedwalk override file put in your zMUD directory that will override any stock speedwalks from the help file.<BR>
+If you want to use portals or faster walks, you can now put them in "aardwolf_speedwalk_overrides.txt". The formatting must be the same as in "aardwolf_speedwalks.txt"</li>
+<li>There is now a changespeedwalkprefix command that allows you to add a prefix group of commands to all non-overridden speedwalks. Use this if you want to run from <BR>
+your manor or clan hall and want to exit to Aylor before starting the runs. Overridden speedwalks do not get prefixed, so you'll need to do those yourself in the overrides<BR>
+file. This command is listed in the speedwalkhelp display. Thanks to Eclaboussure.</li></ul>
+
+What this script does:<BR>
+<ul><li>Provides you with a dynamic speedwalk runner that will take you to any area listed in the publicly available speedwalk list</li>
+<li>Will update the stored speedwalks by itself at your command</li>
+<li>Make you never have to remember area keywords</li></ul><BR>
+Download the script here: <a href="Speedwalks.zip">Self-Updating Speedwalk Script</a><BR>
+IF YOU DO NOT INSTALL THIS SCRIPT AS DESCRIBED BELOW YOU WILL BE SORRY.<BR><BR><BR>
+
+------------ BEGIN INSTRUCTIONS ------------<BR><BR>
+This script installs a class named "Speedwalks" which contains a disabled class called "speedwalkinternals"<BR>
+and aliases "runto", "checksw", "speedwalkhelp", "changespeedwalkprefix", and "speedwalkupdate".<BR>
+It also creates two files in your zMUD Aardwolf profile directory called "aardwolf_speedwalks.txt" and "aardwolf_speedwalk_overrides.txt"<BR>
+If any of your scripts conflict with these names, they must be removed first or everything will break.<BR><BR>
+To install the script go to the Actions menu in zMUD and choose "Execute script..."<BR>
+Do not think that you know how to do it better. Do not think that you can import the script in any other way.<BR>
+You MUST use execute script.<BR>
+<img src="how_to_execute_file1.png" alt="How to execute files step 1"><BR>
+<BR>
+Then select the text file containing the script, in this case Speedwalks.txt, and click Open<BR>
+<img src="how_to_execute_file2.png" alt="How to execute files step 2"><BR>
+<BR>
+The script then installs and updates itself. Give it a moment to finish.<BR>
+A list of the possible commands will appear while the script is installing.<BR>
+A box will pop up asking if you want to execute commands before running stock speedwalks.<BR>
+That is the "changespeedwalkprefix" command which can be changed at any time.<BR>
+<img src="speedwalk_installer.png"><BR>
+<BR>
+Now all you have to do is go to recall and type "runto &lt;area substring&gt;" and you're off!<BR>
+If you enter an ambiguous substring, the script will prompt you to choose which of the possible matching areas you want to run to.<BR>
+<img src="choose_from_speedwalk_list.png">
+</body></html>
